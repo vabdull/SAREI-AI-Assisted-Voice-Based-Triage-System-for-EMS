@@ -155,21 +155,19 @@ models/
 
 ### 1. Install Python 3.11
 
-Download Python 3.11 from:
+Open PowerShell.
 
-```text
-https://www.python.org/downloads/release/python-3119/
+Install Python 3.11:
+
+```powershell
+winget install Python.Python.3.11
 ```
 
-During installation, check:
+Close PowerShell.
 
-```text
-Add python.exe to PATH
-```
+Open PowerShell again.
 
-After installing, close PowerShell and open it again.
-
-Check Python 3.11:
+Check that Python 3.11 installed correctly:
 
 ```powershell
 py -3.11 --version
@@ -183,17 +181,20 @@ Python 3.11.x
 
 If this command fails, Python 3.11 is not installed correctly.
 
+Backup option: download Python 3.11 from `https://www.python.org/downloads/release/python-3119/`.
+During manual installation, check `Add python.exe to PATH`.
+
 ### 2. Install Node.js
 
-Download Node.js LTS from:
+In PowerShell, install Node.js LTS:
 
-```text
-https://nodejs.org/
+```powershell
+winget install OpenJS.NodeJS.LTS
 ```
 
-Install it with the default options.
+Close PowerShell.
 
-After installing, close PowerShell and open it again.
+Open PowerShell again.
 
 Check Node and npm:
 
@@ -203,6 +204,8 @@ npm -v
 ```
 
 Node should be version 18 or newer.
+
+Backup option: download Node.js LTS from `https://nodejs.org/`.
 
 ### 3. Install ffmpeg
 
