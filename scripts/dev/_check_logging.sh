@@ -7,7 +7,7 @@ export EMS_LOG_FILE=/tmp/_ems_log_test.log
 : > /tmp/_ems_log_test.log
 python - <<'PY'
 import logging
-from backend.app.core.logging import configure_logging
+from backend.core.logging import configure_logging
 
 configure_logging()
 root = logging.getLogger()

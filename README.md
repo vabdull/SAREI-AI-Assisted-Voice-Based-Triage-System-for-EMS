@@ -74,12 +74,12 @@ SAREI/
 
 ## Backend Overview
 
-The FastAPI app entrypoint is `backend.app.main:app`. All routes are
+The FastAPI app entrypoint is `backend.main:app`. All routes are
 served under `/api/v1` with these prefixes (see
-`backend/app/api/v1/router.py`): `auth`, `cases`, `dispatcher`,
+`backend/api/v1/router.py`): `auth`, `cases`, `dispatcher`,
 `inference`, `realtime`, `triage`, `admin`, `ambulance`, `hospital`.
 
-Database entities (`backend/app/db/models.py`):
+Database entities (`backend/db/models.py`):
 
 - `User` - account with a role (`dispatcher`, `medic`, `hospital`, `admin`).
 - `Case` - an emergency case with transcript, extraction, triage, and routing fields.
@@ -282,7 +282,7 @@ Activate the Python environment:
 Start the backend:
 
 ```powershell
-python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8011 --reload
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8011 --reload
 ```
 
 Keep this terminal open.
@@ -339,7 +339,7 @@ Open terminal 1:
 ```powershell
 cd C:\path\to\SAREI
 .venv\Scripts\Activate.ps1
-python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8011 --reload
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8011 --reload
 ```
 
 Open terminal 2:

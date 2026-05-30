@@ -26,7 +26,7 @@ import torch
 import nemo.collections.asr as nemo_asr
 from nemo.utils import logging
 
-from backend.app.ai.audio_preprocessing import preprocess_audio_file
+from backend.ai.audio_preprocessing import preprocess_audio_file
 
 
 SUPPORTED_EXTENSIONS = {".wav", ".flac", ".mp3", ".ogg", ".opus"}

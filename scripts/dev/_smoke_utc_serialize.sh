@@ -4,7 +4,7 @@
 cd /mnt/c/Users/user/Desktop/SAREI
 ~/ems-triage-venv/bin/python - <<'PY'
 from datetime import datetime
-from backend.app.schemas.cases import CaseRead
+from backend.schemas.cases import CaseRead
 
 raw = {
     "id": 1,

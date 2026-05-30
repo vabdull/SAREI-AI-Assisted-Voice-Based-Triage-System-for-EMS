@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
 
 from sqlalchemy import inspect, text  # noqa: E402
 
-from backend.app.db.session import engine  # noqa: E402
+from backend.db.session import engine  # noqa: E402
 
 
 COLUMN = "patient_count"

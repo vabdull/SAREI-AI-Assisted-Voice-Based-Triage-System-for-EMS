@@ -14,7 +14,7 @@ for m in ("rapidfuzz", "pyarabic", "yaml"):
 
 print("--- triage engine import ---")
 try:
-    from backend.app.triage_engine import get_triage_engine
+    from backend.triage_engine import get_triage_engine
     e = get_triage_engine()
     print("engine ok", len(e.bank.symptoms), "symptoms", len(e.bank.phrase_index), "phrases")
 except Exception as ex:

@@ -24,9 +24,9 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from backend.app.db.models import Case, TranscriptSegment  # noqa: E402
-from backend.app.db.session import SessionLocal  # noqa: E402
-from backend.app.services.fast_decision_service import (  # noqa: E402
+from backend.db.models import Case, TranscriptSegment  # noqa: E402
+from backend.db.session import SessionLocal  # noqa: E402
+from backend.services.fast_decision_service import (  # noqa: E402
     infer_patient_count,
 )
 

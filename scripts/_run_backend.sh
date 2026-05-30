@@ -14,7 +14,7 @@ export PYTHONUNBUFFERED=1
 LOG=/tmp/ems-backend.log
 export EMS_LOG_FILE="$LOG"
 : > "$LOG"
-exec uvicorn backend.app.main:app \
+exec uvicorn backend.main:app \
   --host 127.0.0.1 --port 8011 \
   --log-level info --no-use-colors \
   >>"$LOG" 2>&1

@@ -4,6 +4,6 @@
 # from PowerShell where quoting a one-liner is painful.
 cd /mnt/c/Users/user/Desktop/SAREI
 ~/ems-triage-venv/bin/python - <<'PY'
-from backend.app.api.v1 import ambulance, hospital, dispatcher
+from backend.api.v1 import ambulance, hospital, dispatcher
 print("import_ok")
 PY

@@ -14,8 +14,8 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from backend.app.triage_engine import get_triage_engine
-from backend.app.triage_engine.matcher import FuzzyMatcher
+from backend.triage_engine import get_triage_engine
+from backend.triage_engine.matcher import FuzzyMatcher
 
 matcher = FuzzyMatcher(get_triage_engine().bank)
 

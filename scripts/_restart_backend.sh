@@ -12,12 +12,12 @@ LOG="${LOG:-/tmp/ems_backend.log}"
 PROJECT="${PROJECT:-/mnt/c/Users/user/Desktop/SAREI}"
 
 echo "[restart_backend] stopping any existing uvicorn on :$PORT"
-pkill -f "uvicorn backend.app.main" 2>/dev/null || true
+pkill -f "uvicorn backend.main" 2>/dev/null || true
 sleep 2
 
 cd "$PROJECT"
 echo "[restart_backend] spawning uvicorn (venv=$VENV port=$PORT log=$LOG)"
-setsid nohup "$VENV/bin/uvicorn" backend.app.main:app \
+setsid nohup "$VENV/bin/uvicorn" backend.main:app \
     --host 127.0.0.1 --port "$PORT" \
     --log-level info --no-use-colors \
     </dev/null >"$LOG" 2>&1 &

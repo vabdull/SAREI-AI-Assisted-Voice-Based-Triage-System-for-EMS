@@ -5,7 +5,7 @@ import sqlite3
 import sys
 from pathlib import Path
 
-from backend.app.ai.asr_runtime import StreamingAsrService
+from backend.ai.asr_runtime import StreamingAsrService
 
 
 def _to_wsl_path(windows_path: str) -> str:

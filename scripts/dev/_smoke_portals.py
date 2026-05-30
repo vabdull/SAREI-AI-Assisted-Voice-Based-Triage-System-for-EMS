@@ -4,9 +4,9 @@ import json
 import urllib.error
 import urllib.request
 
-from backend.app.core.security import create_access_token
-from backend.app.db.models import User, UserRole
-from backend.app.db.session import SessionLocal
+from backend.core.security import create_access_token
+from backend.db.models import User, UserRole
+from backend.db.session import SessionLocal
 
 
 def hit(uid: int, path: str) -> dict | list | str:

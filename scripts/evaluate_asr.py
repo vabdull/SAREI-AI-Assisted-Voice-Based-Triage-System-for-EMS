@@ -28,7 +28,7 @@ from tqdm import tqdm
 import nemo.collections.asr as nemo_asr
 from nemo.utils import logging
 
-from backend.app.ai.audio_preprocessing import preprocess_audio_file
+from backend.ai.audio_preprocessing import preprocess_audio_file
 
 
 def parse_args() -> argparse.Namespace:

@@ -1,5 +1,5 @@
 // Shared TypeScript types describing the backend API's request/response
-// shapes. These mirror the Pydantic schemas in backend/app/schemas so the
+// shapes. These mirror the Pydantic schemas in backend/schemas so the
 // frontend and backend stay in sync.
 
 export interface UserRead {

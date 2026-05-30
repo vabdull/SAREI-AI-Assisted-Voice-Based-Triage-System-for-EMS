@@ -8,8 +8,8 @@ import numpy as np
 import soundfile as sf
 import websockets
 
-from backend.app.ai.audio_preprocessing import preprocess_audio_chunk
-from backend.app.core.security import create_access_token
+from backend.ai.audio_preprocessing import preprocess_audio_chunk
+from backend.core.security import create_access_token
 
 
 async def main() -> None:

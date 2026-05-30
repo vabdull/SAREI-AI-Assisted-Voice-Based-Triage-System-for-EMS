@@ -4,7 +4,7 @@ import re
 import sqlite3
 import sys
 
-from backend.app.core.config import get_settings
+from backend.core.config import get_settings
 
 path = re.sub(r"^sqlite:///", "", get_settings().database_url)
 con = sqlite3.connect(path)

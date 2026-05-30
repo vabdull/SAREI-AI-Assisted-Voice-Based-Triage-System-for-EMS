@@ -11,12 +11,12 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from backend.app.db.models import (  # noqa: E402
+from backend.db.models import (  # noqa: E402
     Case,
     CallRecording,
     TranscriptSegment,
 )
-from backend.app.db.session import SessionLocal  # noqa: E402
+from backend.db.session import SessionLocal  # noqa: E402
 
 
 def main() -> int:

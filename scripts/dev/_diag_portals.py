@@ -15,10 +15,10 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from backend.app.api.v1.ambulance import my_cases as ambulance_my_cases  # noqa: E402
-from backend.app.api.v1.hospital import incoming_cases  # noqa: E402
-from backend.app.db.models import Case, User, UserRole  # noqa: E402
-from backend.app.db.session import SessionLocal  # noqa: E402
+from backend.api.v1.ambulance import my_cases as ambulance_my_cases  # noqa: E402
+from backend.api.v1.hospital import incoming_cases  # noqa: E402
+from backend.db.models import Case, User, UserRole  # noqa: E402
+from backend.db.session import SessionLocal  # noqa: E402
 
 
 def main() -> int:

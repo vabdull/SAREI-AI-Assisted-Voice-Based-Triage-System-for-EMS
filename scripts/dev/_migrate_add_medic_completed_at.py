@@ -24,7 +24,7 @@ if str(ROOT) not in sys.path:
 
 from sqlalchemy import inspect, text  # noqa: E402
 
-from backend.app.db.session import SessionLocal, engine  # noqa: E402
+from backend.db.session import SessionLocal, engine  # noqa: E402
 
 
 COLUMN = "medic_completed_at"
