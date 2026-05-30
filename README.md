@@ -225,7 +225,11 @@ ffmpeg -version
 
 ### 4. Download and extract the project
 
-Download the SAREI ZIP file.
+Download the SAREI ZIP file from Google Drive:
+
+```text
+https://drive.google.com/file/d/1lhTRaONNKb4tfhXp7x7WRIaUANSHAKg9/view?usp=sharing
+```
 
 Right-click the ZIP file.
 
