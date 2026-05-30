@@ -1,0 +1,41 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+nemo_3d_sada/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / frontend
+node_modules/
+frontend/dist/
+frontend/node_modules/
+frontend/.vite/
+
+# Logs
+logs/
+*.log
+
+# ML training artifacts and datasets (large, not part of the app)
+manifests/
+manifests_debug/
+manifests_ems_dialects/
+# Dataset audio and runtime recordings (large; not needed to run the app)
+data/
+
+# OS / editor
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1177 @@
+# EMS Arabic Triage Keyword Bank
+# ───────────────────────────────────────────────────────────────────────────
+# Phrases are written in NORMALIZED Arabic to match the ASR output:
+#   - no tashkeel (ً ٌ ٍ َ ُ ِ ّ ْ stripped)
+#   - alef unified to ا (no أ إ آ ٱ)
+#   - ya unified to ي (no ى)
+#   - ta marbuta unified to ه (no ة)
+#   - tatweel ـ stripped
+# The loader still normalizes at load time so unnormalized edits are safe.
+#
+# ESI: 1 (critical) → 5 (non-urgent). Mapped to red/yellow/green by rules.py:
+#   ESI 1-2 → red, ESI 3 → yellow, ESI 4-5 → green
+#
+# Dialects: msa = Modern Standard Arabic, najdi, hijazi, khaleeji.
+# "universal" = phrases that span all dialects or are unmistakable.
+
+version: 1
+
+meta:
+  description: "EMS Arabic symptom bank covering the full scope of prehospital emergencies"
+  normalization_applied: true
+  triage_scale: "ESI-1-5"
+  dialects: [msa, najdi, hijazi, khaleeji, universal]
+
+symptoms:
+
+  # ═════════════════════════════════════════════════════════════════════════
+  # ESI-1: IMMEDIATE - life threat, act NOW
+  # ═════════════════════════════════════════════════════════════════════════
+
+  - id: cardiac_arrest
+    category: cardiac
+    esi: 1
+    weight: 10
+    description_ar: "توقف القلب"
+    phrases:
+      msa: ["توقف القلب", "سكته قلبيه", "ايقاف القلب"]
+      najdi: ["قلبه وقف", "وقف قلبه", "قلبه ما يشتغل", "ما عنده نبض", "قلبه ميت"]
+      hijazi: ["قلبه وقف", "قلبه واقف", "قلبه بطل يشتغل", "مفيش نبض", "قلبه مش شغال"]
+      khaleeji: ["قلبه وقف", "قلبه ما يدق", "ما فيه نبض", "قلبه سكت", "ما عاد يدق قلبه"]
+      universal: ["بدون نبض", "قلبه توقف", "ارتفعت روحه"]
+
+  - id: not_breathing
+    category: airway
+    esi: 1
+    weight: 10
+    description_ar: "توقف التنفس"
+    phrases:
+      msa: ["لا يتنفس", "توقف التنفس", "انقطاع التنفس"]
+      najdi: ["ما يتنفس", "تنفسه وقف", "ما عنده نفس", "انقطع نفسه", "ما يجيه نفس"]
+      hijazi: ["مش بيتنفس", "نفسه وقف", "مش لاقي نفس", "ما يقدر ياخذ نفس"]
+      khaleeji: ["ما يتنفس", "تنفسه وقف", "ما يجيه هوا", "ما يقدر ياخذ نفس"]
+      universal: ["نفس وقف", "انقطع النفس", "ما يطلع نفس"]
+
+  - id: unconscious
+    category: neuro
+    esi: 1
+    weight: 9
+    description_ar: "فقدان الوعي"
+    phrases:
+      msa: ["فاقد الوعي", "مغمى عليه", "لا يستجيب", "غياب الوعي"]
+      najdi: ["طاح", "ما يصحى", "ما يرد علي", "ما يفيق", "خامل", "مو صاحي", "مغشي عليه"]
+      hijazi: ["واقع", "مش صاحي", "مش راد", "مش حاسس", "مغمى عليه"]
+      khaleeji: ["خر", "ما يفيق", "ما يرد", "فاقد وعيه", "اغمى عليه"]
+      universal: ["ما يستجيب", "ما يتحرك", "ما يفتح عينه"]
+
+  - id: severe_bleeding
+    category: trauma
+    esi: 1
+    weight: 9
+    description_ar: "نزيف حاد"
+    phrases:
+      msa: ["نزيف حاد", "نزيف شديد", "فقدان دم كبير", "نزف غزير"]
+      najdi: ["دمه ما يوقف", "ينزف بشده", "دم كثير", "نازف بشده", "يفقد دم"]
+      hijazi: ["بينزف كتير", "دمه مش واقف", "نزيف قوي", "فيه دم كتير"]
+      khaleeji: ["دمه ما يوقف", "ينزف بقوه", "نزيف ما يوقف", "دمه يطلع بقوه", "يفقد دم وايد"]
+      universal: ["نزيف", "دم ينزل", "ينزف", "الدم ما يقف"]
+
+  - id: anaphylaxis
+    category: allergy
+    esi: 1
+    weight: 9
+    description_ar: "تفاعل تحسسي شديد - صدمه"
+    phrases:
+      msa: ["صدمه تحسسيه", "حساسيه حاده", "انتفاخ الحلق", "انتفاخ اللسان والحلق"]
+      najdi: ["حلقه منتفخ", "ما يقدر يتنفس من الحساسيه", "لسانه كبر", "حلقه سكر"]
+      hijazi: ["حلقه انتفخ", "ما يقدر يبلع", "زق من الحساسيه", "لسانه ورم"]
+      khaleeji: ["حلقه ورم", "ما يتنفس من الحساسيه", "لسانه تورم", "حلقه طبق"]
+      universal: ["ورم حلق", "انتفاخ وجه وحلق", "صدمه حساسيه"]
+
+  - id: active_seizure
+    category: neuro
+    esi: 1
+    weight: 9
+    description_ar: "تشنج مستمر"
+    phrases:
+      msa: ["تشنج مستمر", "نوبه صرع مستمره", "حاله صرعيه"]
+      najdi: ["يتشنج من زمان", "ما يوقف التشنج", "يتخبط من فتره", "نوبه ما تخلص"]
+      hijazi: ["بيتشنج من فتره", "النوبه مش بتوقف", "مستمر بيترجف"]
+      khaleeji: ["يتشنج من مده", "النوبه ما توقف", "يرتجف من فتره طويله"]
+      universal: ["تشنج متواصل", "نوبه طويله", "يتشنج اكثر من خمس دقايق"]
+
+  - id: major_trauma
+    category: trauma_rta
+    esi: 1
+    weight: 9
+    description_ar: "اصابه بالغه من حادث"
+    phrases:
+      msa: ["اصابه بالغه", "رضح شديد", "صدمه حاده"]
+      najdi: ["اصابه خطيره", "طرشه شديده", "انهرس", "انكسر جسمه"]
+      hijazi: ["اصابه خطيره", "اتهرس", "اصطدام قوي", "اتكسر كله"]
+      khaleeji: ["اصابه خطيره", "دهس", "تهشم", "جسمه تكسر"]
+      universal: ["حادث خطير", "اصابه قويه", "تدهور شديد"]
+
+  - id: severe_stroke
+    category: neuro
+    esi: 1
+    weight: 9
+    description_ar: "سكته دماغيه بعلامات واضحه"
+    phrases:
+      msa: ["جلطه دماغيه كامله", "سكته دماغيه شديده", "شلل نصفي مفاجئ"]
+      najdi: ["فجاه وجهه مايل وما يتكلم", "ما يقدر يحرك جنبه", "طاح ولسانه ثقيل"]
+      hijazi: ["فجاه وشه اعوج ومش راد", "مش قادر يحرك جنبه", "كلامه راح"]
+      khaleeji: ["فجاه خر ووجهه مايل", "جنب جسمه ما يتحرك", "لسانه ثقيل وما يتكلم"]
+      universal: ["فجاه شلل", "شلل نصفي", "سكته", "جلطه"]
+
+  - id: drowning_submersion
+    category: environmental
+    esi: 1
+    weight: 10
+    description_ar: "غرق"
+    phrases:
+      msa: ["غرق", "غرق في الماء", "غرق في البحر", "غرق في المسبح", "شبه غرق"]
+      najdi: ["طاح بالمسبح", "غرق بالبحر", "شرب ماي", "طلع من الماي فاقد الوعي"]
+      hijazi: ["غرق في البحر", "طاح في المسبح", "طلعوه من الميه"]
+      khaleeji: ["غرق بالمسبح", "غرق بالبحر", "طلعوه من الماي"]
+      universal: ["غرق", "شبه غرق", "طلع من الماي ما يتنفس"]
+
+  - id: major_electrocution
+    category: environmental
+    esi: 1
+    weight: 9
+    description_ar: "صعقه كهربائيه كبيره"
+    phrases:
+      msa: ["صعقه كهربائيه", "تيار كهربائي عالي", "صدمه كهربائيه"]
+      najdi: ["صعقه كهرب", "ضربه كهرب قويه", "مسكته كهرب", "كهربته قويه"]
+      hijazi: ["صعقه كهربا", "اتكهرب", "مسكت فيه الكهربا"]
+      khaleeji: ["كهربائيه قويه", "صعقه من الكهربا", "اتكهرب"]
+      universal: ["كهرب", "صعقه", "التيار ضربه"]
+
+  - id: major_amputation
+    category: trauma
+    esi: 1
+    weight: 10
+    description_ar: "بتر عضو"
+    phrases:
+      msa: ["بتر", "قطع العضو", "بتر الطرف", "انفصل العضو"]
+      najdi: ["يده انقطعت", "رجله انقطعت", "طارت يده", "اصبعه انقطع", "ذراعه انقطعت"]
+      hijazi: ["ايده اتقطعت", "رجله اتقطعت", "صباعه اتقطع"]
+      khaleeji: ["يده انقطعت", "رجله انقطعت", "اصبعه راح"]
+      universal: ["قطع", "انقطعت", "بتر", "طار منه"]
+
+  - id: gunshot_wound
+    category: trauma_penetrating
+    esi: 1
+    weight: 10
+    description_ar: "اصابه بطلق ناري"
+    phrases:
+      msa: ["اصابه بطلق ناري", "ضرب ناري", "جرح بناري"]
+      najdi: ["طلق ناري", "ضربه رصاصه", "عيار ناري", "اصابته رصاصه"]
+      hijazi: ["اتضرب بناري", "رصاصه", "اتصاب بعياره"]
+      khaleeji: ["طلق ناري", "رصاصه", "اتضرب بناري"]
+      universal: ["اطلاق نار", "رصاصه", "طلق ناري"]
+
+  - id: major_stabbing
+    category: trauma_penetrating
+    esi: 1
+    weight: 9
+    description_ar: "طعنه بسكين"
+    phrases:
+      msa: ["طعنه", "طعن بسكين", "اصابه بسكين"]
+      najdi: ["طعنه سكين", "دخل سكين", "مطعون", "طعنه بالصدر", "طعنه بالبطن"]
+      hijazi: ["اتطعن", "سكينه دخلت فيه", "طعنه بالبطن"]
+      khaleeji: ["مطعون", "طعنه سكين", "طعنه بالصدر"]
+      universal: ["طعنه", "سكين", "جرح سكين عميق"]
+
+  - id: airway_burn
+    category: burns
+    esi: 1
+    weight: 9
+    description_ar: "حرق استنشاق - تعرض لدخان"
+    phrases:
+      msa: ["حرق استنشاقي", "استنشاق دخان", "احتراق الممرات الهوائيه"]
+      najdi: ["بلع دخان كثير", "حنجرته محروقه", "صوته راح من الدخان", "دخل دخان بحلقه"]
+      hijazi: ["بلع دخان كتير", "زوره محروق", "اختنق من الدخان"]
+      khaleeji: ["بلع دخان وايد", "حلقه محروق", "ما يتنفس من الدخان"]
+      universal: ["دخان", "استنشاق دخان", "حريق وابتلع دخان"]
+
+  - id: neonatal_emergency
+    category: pediatric
+    esi: 1
+    weight: 10
+    description_ar: "طارئه حديث ولاده"
+    phrases:
+      msa: ["حديث ولاده لا يتنفس", "رضيع مغمى عليه", "طارئه وليد"]
+      najdi: ["مولود توه ما يتنفس", "رضيع ازرق", "بيبي ما يبكي", "المولود بارد"]
+      hijazi: ["مولود مش بيتنفس", "بيبي ازرق", "رضيع مش بيصرخ"]
+      khaleeji: ["المولود ما يتنفس", "الرضيع ازرق", "ما يبكي الطفل"]
+      universal: ["رضيع ازرق", "مولود حديث ما يتنفس", "طفل حديث ولاده"]
+
+  # ═════════════════════════════════════════════════════════════════════════
+  # ESI-2: EMERGENT - high risk, dont wait
+  # ═════════════════════════════════════════════════════════════════════════
+
+  - id: chest_pain_ischemic
+    category: cardiac
+    esi: 2
+    weight: 8
+    description_ar: "الم صدر مشتبه بذبحه"
+    phrases:
+      msa: ["الم في الصدر", "وجع الصدر", "ضغط على الصدر", "الم ضاغط بالصدر"]
+      najdi: ["يوجعني صدري", "صدري يعورني", "ضيق بصدري", "الم بصدري", "صدري مضغوط", "ياخذ على كتفي"]
+      hijazi: ["صدري بيوجعني", "وجع في صدري", "ضغط في صدري", "صدري مضغوط", "الالم واصل لايدي"]
+      khaleeji: ["صدري يعورني", "وجع بالصدر", "ضيق صدر", "الم ينتقل لذراعي"]
+      universal: ["وجع صدر", "الم صدر", "ضيق صدر", "صدر يوجع", "ضغط صدر"]
+
+  - id: stroke_warning
+    category: neuro
+    esi: 2
+    weight: 8
+    description_ar: "علامات جلطه دماغيه"
+    phrases:
+      msa: ["جلطه دماغيه", "سكته دماغيه", "شلل مفاجئ", "اعوجاج الفم"]
+      najdi: ["وجهه مايل", "ما يقدر يحرك يده", "لسانه ثقيل", "يده خدره", "كلامه مو واضح"]
+      hijazi: ["وشه اعوج", "مش قادر يحرك ايده", "كلامه تقيل", "ايده مش شايلها"]
+      khaleeji: ["وجهه مايل", "ما يحرك يده", "لسانه ثقيل", "يده خدره", "كلامه ثقيل"]
+      universal: ["وجه مايل", "شلل", "خدر", "كلامه مش واضح", "ضعف جنب الجسم"]
+
+  - id: severe_difficulty_breathing
+    category: respiratory
+    esi: 2
+    weight: 8
+    description_ar: "ضيق تنفس شديد"
+    phrases:
+      msa: ["صعوبه شديده في التنفس", "ضيق تنفس حاد", "نقص الاكسجين"]
+      najdi: ["ما يقدر يتنفس", "يلهث بشده", "شفاهه زرقت", "نفسه خرب", "يشهق"]
+      hijazi: ["مش قادر يتنفس", "بيلهث", "شفايفه زرقت", "بيشهق"]
+      khaleeji: ["ما يقدر ياخذ نفس", "يلهث", "شفاهه زرقت", "نفسه ضيق مره"]
+      universal: ["ضيق نفس شديد", "يلهث", "زرق شفاه", "ما يكمل جمله"]
+
+  - id: asthma_severe
+    category: respiratory
+    esi: 2
+    weight: 7
+    description_ar: "نوبه ربو حاده"
+    phrases:
+      msa: ["نوبه ربو شديده", "ازمه ربو حاده", "ربو حاد"]
+      najdi: ["نوبه ربو", "الربو ضربه", "بخاخه ما فاد", "نوبه تنفس"]
+      hijazi: ["نوبه ربو", "الربو جاله", "بخاخه ما اشتغل"]
+      khaleeji: ["ربو وما يتنفس", "بخاخ ما فاد", "نوبه ربو"]
+      universal: ["ربو", "ازمه ربو", "ربو شديد"]
+
+  - id: choking
+    category: respiratory
+    esi: 2
+    weight: 9
+    description_ar: "اختناق - جسم غريب"
+    phrases:
+      msa: ["اختناق", "انسداد مجرى التنفس", "جسم غريب بالحلق"]
+      najdi: ["شرق", "شرق في الاكل", "حاجه علقت بحلقه", "ما يقدر يبلع ولا يتنفس"]
+      hijazi: ["شرق", "حاجه علقت في زوره", "مش قادر يبلع"]
+      khaleeji: ["شرق", "اختنق بالاكل", "شي علق بحلقه"]
+      universal: ["مختنق", "شرق", "علقت حاجه بحلقه"]
+
+  - id: overdose
+    category: toxicology
+    esi: 2
+    weight: 8
+    description_ar: "جرعه زائده"
+    phrases:
+      msa: ["جرعه زائده", "تسمم دوائي", "ابتلع كميه كبيره من الدواء"]
+      najdi: ["اكل حبوب كثير", "شرب سم", "جرعه زياده", "اخذ دواء كثير", "بلع علبه حبوب"]
+      hijazi: ["اكل حبوب كتير", "شرب حاجه", "جرعه زياده", "اخذ دواء كتير"]
+      khaleeji: ["اكل دواء كثير", "شرب شي", "جرعه زايده", "اخذ حبوب كثير"]
+      universal: ["حبوب كثير", "ابتلع", "تسمم", "جرعه زياده"]
+
+  - id: poisoning
+    category: toxicology
+    esi: 2
+    weight: 8
+    description_ar: "تسمم"
+    # NOTE (audit 2026-05): the bare 2-character entry ``سم`` was
+    # removed from ``universal``. With substring matching it collided
+    # with the standalone word ``اسمي`` (= "my name is"), painting
+    # the dispatcher's transcript as "poisoning". The remaining
+    # phrases are token-aligned and unambiguous:
+    #   • "تسمم" / "سموم"           — direct symptom mentions
+    #   • "اكل سم" / "شرب سم"        — phrases anchored by a verb
+    # The matcher's token-aware Pass 1 catches all the real cases
+    # via these multi-token phrases.
+    phrases:
+      msa: ["تسمم", "تناول ماده سامه", "تسمم غذائي حاد"]
+      najdi: ["تسمم", "اكل سم", "شرب ماده سامه", "تسمم من اكل"]
+      hijazi: ["اتسمم", "شرب حاجه غلط", "اكل سم"]
+      khaleeji: ["تسمم", "شرب سم", "تسمم من اكل"]
+      universal: ["تسمم", "سموم"]
+
+  - id: co_poisoning
+    category: mci
+    esi: 2
+    weight: 9
+    description_ar: "تسمم بغاز اول اكسيد الكربون"
+    phrases:
+      msa: ["تسمم بغاز", "غاز اول اكسيد الكربون", "تسمم دخان مدفاه"]
+      najdi: ["استنشاق غاز", "دخان المدفاه", "غاز بالبيت", "الفحم بالغرفه"]
+      hijazi: ["غاز بالبيت", "دخان المدفاه", "الفحم طلع غاز"]
+      khaleeji: ["غاز بالبيت", "دخان فحم", "تسمم غاز"]
+      universal: ["غاز", "اول اكسيد كربون", "تسمم غاز"]
+
+  - id: altered_mental_status
+    category: neuro
+    esi: 2
+    weight: 7
+    description_ar: "تغير حاله الوعي"
+    phrases:
+      msa: ["تغير مستوى الوعي", "تشوش ذهني", "ارتباك شديد"]
+      najdi: ["مو عارف وين هو", "متشوش", "كلامه ما يمشي", "مو بنفسه", "يهذي"]
+      hijazi: ["مش عارف فين هو", "متلخبط", "كلامه مش ماشي", "مش في وعيه"]
+      khaleeji: ["ما يعرف وين هو", "متشوش", "كلامه ما يمشي", "مو بوعيه", "يهذي"]
+      universal: ["متشوش", "مرتبك", "مو بنفسه", "يهذي", "ما يعرف اي شي"]
+
+  - id: severe_allergic_reaction
+    category: allergy
+    esi: 2
+    weight: 7
+    description_ar: "تفاعل تحسسي شديد بدون خطر مجرى هوائي"
+    phrases:
+      msa: ["تفاعل تحسسي شديد", "حساسيه حاده"]
+      najdi: ["حساسيه شديده", "جسمه ورم", "وجهه انتفخ", "طفح جلدي كامل"]
+      hijazi: ["حساسيه قويه", "جسمه ورم", "وشه انتفخ", "طفح في كل جسمه"]
+      khaleeji: ["حساسيه حاده", "جسمه ورم", "وجهه انتفخ", "طفح كامل"]
+      universal: ["حساسيه", "ورم", "انتفاخ", "طفح جلدي شديد"]
+
+  - id: sepsis
+    category: infectious
+    esi: 2
+    weight: 7
+    description_ar: "تعفن دم مشتبه"
+    phrases:
+      msa: ["تعفن دم", "انتان الدم", "صدمه انتانيه"]
+      najdi: ["حراره ونبضه سريع", "بارد ومتعرق", "حرارته عاليه وضغطه نزل"]
+      hijazi: ["حرارته عاليه وضغطه واطي", "بيعرق برد", "تعب شديد مع حراره"]
+      khaleeji: ["حراره شديده مع دوار", "ضغطه نزل وحرارته عاليه"]
+      universal: ["انتان", "حرارته فوق الاربعين", "ضغطه نزل وتعب شديد"]
+
+  - id: meningitis_signs
+    category: infectious
+    esi: 2
+    weight: 8
+    description_ar: "علامات التهاب سحايا"
+    phrases:
+      msa: ["التهاب سحايا", "تيبس رقبه", "صداع شديد مع حراره"]
+      najdi: ["رقبته صلبه", "حراره وصداع شديد", "ما يقدر يحرك رقبته"]
+      hijazi: ["رقبته متيبسه", "صداع مع حراره", "ما يحرك رقبته"]
+      khaleeji: ["رقبته يابسه", "صداع وحراره شديده", "ما يقدر يطاطي"]
+      universal: ["تيبس رقبه", "صداع شديد جدا", "حراره مع رقبه متصلبه"]
+
+  - id: severe_abdominal_pain
+    category: gi
+    esi: 2
+    weight: 6
+    description_ar: "الم بطن شديد"
+    phrases:
+      msa: ["الم بطن حاد", "الم شديد جدا في البطن"]
+      najdi: ["بطني تقطع", "ما اتحمل وجع بطني", "بطنه قاسيه وتوجعه"]
+      hijazi: ["بطني بتقطعني", "وجع شديد في بطني", "بطنه قاسيه"]
+      khaleeji: ["بطني تقطعني", "وجع شديد بالبطن", "بطنه متحجره"]
+      universal: ["بطن قاسيه", "الم بطن شديد", "بطن ما تتحمل"]
+
+  - id: gi_bleeding
+    category: gi
+    esi: 2
+    weight: 7
+    description_ar: "نزيف جهاز هضمي"
+    phrases:
+      msa: ["نزيف هضمي", "قيء دموي", "تغوط دموي", "براز اسود"]
+      najdi: ["طلع دم مع القي", "براز اسود", "طرش دم", "سال دم من فمه"]
+      hijazi: ["طلع دم مع الاستفراغ", "براز اسود", "استفرغ دم"]
+      khaleeji: ["قي دم", "براز اسود", "يطرش دم"]
+      universal: ["قي دموي", "دم مع براز", "نزيف من المعده"]
+
+  - id: ectopic_pregnancy
+    category: ob_gyn
+    esi: 2
+    weight: 8
+    description_ar: "حمل خارج الرحم مشتبه"
+    phrases:
+      msa: ["حمل خارج الرحم", "الم بطن مع حمل وانخفاض ضغط"]
+      najdi: ["حامل وبطنها توجعها ودوار", "الم قوي بالبطن وهي حامل", "نزيف وحامل"]
+      hijazi: ["حامل وبطنها بتوجعها وضغطها نزل"]
+      khaleeji: ["حامل وبطنها تعورها وتدوخ"]
+      universal: ["حمل وبطن توجع ودوار", "حمل خارج الرحم"]
+
+  - id: miscarriage_heavy_bleeding
+    category: ob_gyn
+    esi: 2
+    weight: 7
+    description_ar: "اجهاض مع نزيف"
+    phrases:
+      msa: ["اجهاض", "اجهاض مع نزيف شديد", "سقوط الحمل مع نزيف"]
+      najdi: ["سقط الحمل", "نزيف مع الم وهي حامل", "اجهضت"]
+      hijazi: ["سقط الحمل", "نزيف شديد وهي حامل", "اجهضت"]
+      khaleeji: ["سقط حملها", "نزيف مع الم وهي حامل"]
+      universal: ["اجهاض", "سقط الحمل", "نزيف الحمل"]
+
+  - id: active_labor
+    category: ob_gyn
+    esi: 2
+    weight: 6
+    description_ar: "مخاض نشط - ولاده"
+    phrases:
+      msa: ["مخاض", "طلق", "ولاده وشيكه", "ماء الجنين نزل"]
+      najdi: ["توجعها ولاده", "نزل ماء", "راس الطفل بان", "طلقها كل دقيقتين"]
+      hijazi: ["بتولد", "نزلت مياه", "راس البيبي طالع", "طلق كل شويه"]
+      khaleeji: ["توجعها ولاده", "نزلت الميه", "راس الطفل ظهر"]
+      universal: ["ولاده", "طلق", "مخاض", "راس الجنين باين"]
+
+  - id: suicidal_ideation
+    category: psychiatric
+    esi: 2
+    weight: 7
+    description_ar: "افكار انتحاريه"
+    phrases:
+      msa: ["افكار انتحاريه", "يريد الانتحار", "يحاول الانتحار", "اكل حبوب عشان ينتحر"]
+      najdi: ["يبي يقتل نفسه", "حاول ينتحر", "شنق نفسه", "اكل حبوب كثير عشان يموت"]
+      hijazi: ["عايز يموت نفسه", "حاول ينتحر", "شنق حاله"]
+      khaleeji: ["يبي ينتحر", "حاول يقتل نفسه", "شنق روحه"]
+      universal: ["انتحار", "يقتل نفسه", "شنق نفسه", "قطع يده عشان يموت"]
+
+  - id: violent_psychotic
+    category: psychiatric
+    esi: 2
+    weight: 6
+    description_ar: "عنف او ذهان - خطر على نفسه او غيره"
+    phrases:
+      msa: ["هياج شديد", "سلوك عنيف", "نوبه ذهانيه"]
+      najdi: ["يضرب اهله", "هيجان", "يكسر البيت", "مايق", "يهذي ويضرب"]
+      hijazi: ["بيضرب اهله", "هايج", "بيكسر كل حاجه", "بيهذي"]
+      khaleeji: ["يضرب اهله", "هايج", "يكسر الاثاث", "يهذي"]
+      universal: ["هياج", "عنف", "ذهان", "عصبي ويكسر"]
+
+  - id: fall_from_height
+    category: trauma_fall
+    esi: 2
+    weight: 8
+    description_ar: "سقوط من علو"
+    phrases:
+      msa: ["سقوط من علو", "سقوط من ارتفاع", "وقع من الطابق"]
+      najdi: ["طاح من فوق", "طاح من الدور الثاني", "طاح من السلم العالي", "وقع من سطح"]
+      hijazi: ["وقع من فوق", "وقع من الدور التاني", "طاح من علو"]
+      khaleeji: ["طاح من فوق", "طاح من الدور", "سقط من علو"]
+      universal: ["سقوط من علو", "وقع من ارتفاع", "طاح من طابق"]
+
+  - id: rta_high_energy
+    category: trauma_rta
+    esi: 2
+    weight: 8
+    description_ar: "حادث مروري عالي الطاقه"
+    phrases:
+      msa: ["حادث مروري", "حادث سياره", "تصادم"]
+      najdi: ["حادث قوي", "اصطدمت سياره", "انقلبت السياره", "صدمته سياره بسرعه"]
+      hijazi: ["حادث قوي", "اصطدام سيارات", "سيارته اتقلبت"]
+      khaleeji: ["حادث قوي", "انقلاب سياره", "تصادم سيارات"]
+      universal: ["حادث", "تصادم", "انقلاب سياره", "حادث بسرعه عاليه"]
+
+  - id: pedestrian_hit
+    category: trauma_rta
+    esi: 2
+    weight: 8
+    description_ar: "دهس مشاه"
+    phrases:
+      msa: ["دهس", "صدمه سياره لمشاه"]
+      najdi: ["دهسته سياره", "صدمته سياره وهو يمشي", "طارت به السياره"]
+      hijazi: ["اتدهس", "صدمته عربيه"]
+      khaleeji: ["دهسته سياره", "طارت فيه سياره"]
+      universal: ["دهس", "صدمته سياره", "حادث مشاه"]
+
+  - id: motorcycle_accident
+    category: trauma_rta
+    esi: 2
+    weight: 8
+    description_ar: "حادث دراجه ناريه"
+    phrases:
+      msa: ["حادث دراجه ناريه", "حادث موتور"]
+      najdi: ["طاح من الدباب", "اصطدم بدباب", "حادث دباب"]
+      hijazi: ["وقع من الموتوسيكل", "حادث موتور"]
+      khaleeji: ["طاح من الدباب", "حادث دباب"]
+      universal: ["حادث دراجه ناريه", "حادث موتور", "حادث دباب"]
+
+  - id: spinal_injury
+    category: trauma_spine
+    esi: 2
+    weight: 9
+    description_ar: "اشتباه اصابه عمود فقري"
+    phrases:
+      msa: ["اصابه بالعمود الفقري", "اصابه ظهر شديده"]
+      najdi: ["ما يحس برجلينه", "ظهره ينوجع بعد الحادث", "ما يقدر يتحرك من ظهره"]
+      hijazi: ["مش حاسس برجليه", "ظهره بيوجعه بعد الحادث"]
+      khaleeji: ["ما يحس برجوله", "ما يقدر يتحرك"]
+      universal: ["شلل الطرفين", "ما يحس برجليه", "اصابه ظهر مع شلل"]
+
+  - id: neck_injury
+    category: trauma_spine
+    esi: 2
+    weight: 8
+    description_ar: "اصابه رقبه شديده"
+    phrases:
+      msa: ["اصابه رقبه", "ضربه في العنق"]
+      najdi: ["ضربه قويه في رقبته", "رقبته اصابه"]
+      hijazi: ["ضربه قويه في رقبته"]
+      khaleeji: ["ضربه قويه بالرقبه"]
+      universal: ["اصابه رقبه", "رقبه متضرره"]
+
+  - id: major_burn
+    category: burns
+    esi: 2
+    weight: 8
+    description_ar: "حرق كبير"
+    phrases:
+      msa: ["حرق كبير", "حرق واسع", "حرق درجه ثالثه"]
+      najdi: ["محروق كله", "جسمه محترق", "حروق كبيره", "حرق عميق"]
+      hijazi: ["محروق كتير", "جلده اتحرق كله"]
+      khaleeji: ["محروق وايد", "جسمه محروق"]
+      universal: ["حرق شديد", "محروق", "حروق كبيره"]
+
+  - id: chemical_burn
+    category: burns
+    esi: 2
+    weight: 7
+    description_ar: "حرق كيميائي"
+    phrases:
+      msa: ["حرق كيميائي", "حرق من ماده كيميائيه"]
+      najdi: ["حرق من ماده", "انسكبت عليه ماده", "حمض حرقه"]
+      hijazi: ["اتحرق بماده كيميائيه"]
+      khaleeji: ["حرق من ماده كيميائيه"]
+      universal: ["حرق كيميائي", "حمض", "ماده كاويه"]
+
+  - id: hazmat_exposure
+    category: mci
+    esi: 2
+    weight: 8
+    description_ar: "تعرض لمواد خطره"
+    phrases:
+      msa: ["مواد خطره", "تسرب كيميائي", "تعرض لغاز"]
+      najdi: ["تسرب غاز", "في مصنع وتسرب", "استنشقوا غاز"]
+      hijazi: ["تسرب مواد", "غاز تسرب بالمصنع"]
+      khaleeji: ["تسرب غاز", "مواد خطره"]
+      universal: ["تسرب مواد", "حادث كيميائي", "هازمات"]
+
+  - id: mci_entrapment
+    category: mci
+    esi: 2
+    weight: 8
+    description_ar: "احتجاز بين حطام"
+    phrases:
+      msa: ["محتجز", "حبيس تحت الحطام"]
+      najdi: ["منحبس بالسياره", "تحت الحطام", "ما نقدر نطلعه", "عالق"]
+      hijazi: ["محبوس في العربيه", "عالق تحت الحطام"]
+      khaleeji: ["عالق بالسياره", "ما نقدر نطلعه"]
+      universal: ["محتجز", "عالق", "تحت الحطام"]
+
+  - id: mci_mass_casualty
+    category: mci
+    esi: 2
+    weight: 9
+    description_ar: "حادث بعدد كبير من المصابين"
+    phrases:
+      msa: ["حادث جماعي", "عدد كبير من المصابين", "حادث باصات"]
+      najdi: ["فيه مصابين كثار", "حادث كبير فيه ناس كثير"]
+      hijazi: ["مصابين كتير", "حادث كبير"]
+      khaleeji: ["مصابين وايد", "حادث كبير فيه ناس وايد"]
+      universal: ["حادث جماعي", "عدد من المصابين", "MCI", "كثير مصابين"]
+
+  - id: heat_stroke
+    category: environmental
+    esi: 2
+    weight: 7
+    description_ar: "ضربه شمس"
+    phrases:
+      msa: ["ضربه شمس", "ضربه حراريه", "ارهاق حراري شديد"]
+      najdi: ["ضربته الشمس", "حرارته مرتفعه وجلده ناشف", "طاح من الحر"]
+      hijazi: ["ضربته الشمس", "الحر ضربه"]
+      khaleeji: ["ضربه شمس", "اغمى عليه من الحر"]
+      universal: ["ضربه شمس", "ضربه حراره", "اجهاد حراري"]
+
+  - id: hypothermia_severe
+    category: environmental
+    esi: 2
+    weight: 7
+    description_ar: "انخفاض حراره الجسم الشديد"
+    phrases:
+      msa: ["انخفاض درجه حراره الجسم", "هبوط الحراره", "برد شديد"]
+      najdi: ["جسمه بارد مره", "برد قوي", "يرتجف من البرد الشديد"]
+      hijazi: ["جسمه بارد قوي", "اتجمد من البرد"]
+      khaleeji: ["جسمه بارد جدا", "تجمد"]
+      universal: ["برد شديد", "حراره الجسم هابطه", "تجمد"]
+
+  - id: snake_bite
+    category: environmental
+    esi: 2
+    weight: 8
+    description_ar: "لدغه ثعبان"
+    phrases:
+      msa: ["لدغه افعى", "لدغه ثعبان", "عضه حيه"]
+      najdi: ["عضه حنش", "حيه عضته", "لدغته افعى"]
+      hijazi: ["اتعضت من تعبان", "تعبان عضه"]
+      khaleeji: ["عضه حيه", "لدغه ثعبان"]
+      universal: ["ثعبان", "افعى", "لدغه حيه", "عضه حيه"]
+
+  - id: scorpion_sting
+    category: environmental
+    esi: 3
+    weight: 5
+    description_ar: "لسعه عقرب"
+    phrases:
+      msa: ["لسعه عقرب", "قرصه عقرب"]
+      najdi: ["لسعه عقرب", "عقربه قرصته"]
+      hijazi: ["عقرب لسعه"]
+      khaleeji: ["لسعه عقرب"]
+      universal: ["عقرب", "لسعه عقرب"]
+
+  - id: febrile_seizure
+    category: pediatric
+    esi: 2
+    weight: 7
+    description_ar: "تشنج حراري عند طفل"
+    phrases:
+      msa: ["تشنج حراري", "نوبه صرع مع حراره عند طفل"]
+      najdi: ["الطفل يتشنج مع حراره", "تشنج من الحراره"]
+      hijazi: ["البيبي بيتشنج ومعاه حراره"]
+      khaleeji: ["الطفل يتشنج ومعاه حراره"]
+      universal: ["تشنج طفل مع حراره", "تشنج حراري"]
+
+  - id: pediatric_choking
+    category: pediatric
+    esi: 1
+    weight: 9
+    description_ar: "اختناق طفل"
+    phrases:
+      msa: ["طفل مختنق", "طفل شرق"]
+      najdi: ["الطفل شرق", "بلع شي وشرق", "البيبي مختنق"]
+      hijazi: ["البيبي شرق", "الطفل مختنق"]
+      khaleeji: ["الطفل شرق", "البيبي مختنق"]
+      universal: ["طفل مختنق", "طفل شرق", "طفل ابتلع"]
+
+  - id: child_abuse_signs
+    category: pediatric
+    esi: 2
+    weight: 8
+    description_ar: "علامات اساءه للطفل"
+    phrases:
+      msa: ["علامات اعتداء على طفل", "طفل مصاب بكدمات مشبوهه"]
+      najdi: ["الطفل عليه كدمات قديمه وجديده", "الطفل متضرب"]
+      hijazi: ["الطفل عليه كدمات"]
+      khaleeji: ["الطفل عليه اثار"]
+      universal: ["طفل متضرب", "علامات عنف على طفل"]
+
+  - id: crush_injury
+    category: trauma_blunt
+    esi: 2
+    weight: 8
+    description_ar: "اصابه سحق"
+    phrases:
+      msa: ["سحق العضو", "انسحاق", "ضغط مستمر على طرف"]
+      najdi: ["رجله منحشره تحت شي ثقيل", "انسحقت يده", "طاح عليه حديد"]
+      hijazi: ["ايده انسحقت", "وقع عليه حاجه تقيله"]
+      khaleeji: ["رجله انسحقت", "شي ثقيل طاح عليه"]
+      universal: ["سحق", "منحشر تحت شي ثقيل", "انسحاق"]
+
+  - id: industrial_accident
+    category: mci
+    esi: 2
+    weight: 7
+    description_ar: "حادث عمل"
+    phrases:
+      msa: ["حادث عمل", "حادث صناعي", "اصابه في موقع عمل"]
+      najdi: ["بالورشه صارله حادث", "اصابه بموقع شغل"]
+      hijazi: ["حادث في المصنع", "اصيب في الشغل"]
+      khaleeji: ["حادث بموقع عمل"]
+      universal: ["حادث عمل", "حادث ورشه", "حادث مصنع"]
+
+  # ═════════════════════════════════════════════════════════════════════════
+  # ESI-3: URGENT - needs workup, stable for now
+  # ═════════════════════════════════════════════════════════════════════════
+
+  - id: palpitations
+    category: cardiac
+    esi: 3
+    weight: 5
+    description_ar: "خفقان"
+    phrases:
+      msa: ["خفقان", "ضربات قلب سريعه"]
+      najdi: ["قلبه يرقص", "قلبه يدق بسرعه", "نبضه سريع"]
+      hijazi: ["قلبه بيرقص", "قلبه سريع"]
+      khaleeji: ["قلبه يدق بقوه", "نبضه سريع"]
+      universal: ["خفقان", "قلب سريع", "نبض سريع"]
+
+  - id: syncope
+    category: cardiac
+    esi: 3
+    weight: 6
+    description_ar: "اغماء ثم استعاد وعيه"
+    phrases:
+      msa: ["اغماء عابر", "اغمي عليه ثم افاق"]
+      najdi: ["طاح وقام", "غشى عليه شويه ورجع", "اغمى عليه ورجع"]
+      hijazi: ["اغمى عليه ورجع", "طاح ورجع"]
+      khaleeji: ["اغمى عليه ورجع", "طاح ثم قام"]
+      universal: ["اغماء قصير", "طاح ورجع لوعيه"]
+
+  - id: severe_headache
+    category: neuro
+    esi: 3
+    weight: 5
+    description_ar: "صداع شديد جدا"
+    phrases:
+      msa: ["صداع شديد", "صداع حاد", "اسوا صداع في حياته"]
+      najdi: ["صداع قوي مره", "راسه ينفجر", "ما اتحمل صداعي"]
+      hijazi: ["صداع قوي", "راسي هيفرقع"]
+      khaleeji: ["صداع شديد", "راسه منفجر"]
+      universal: ["صداع شديد", "الم راس قوي"]
+
+  - id: single_seizure_resolved
+    category: neuro
+    esi: 3
+    weight: 5
+    description_ar: "نوبه صرع انتهت"
+    phrases:
+      msa: ["نوبه صرع انتهت", "تشنج وانتهى"]
+      najdi: ["جاه تشنج وخلص", "يتشنج قبل شويه وصحى", "صرع وراح"]
+      hijazi: ["كان بيتشنج ورجع", "التشنج خلص"]
+      khaleeji: ["كان يتشنج ورجع"]
+      universal: ["تشنج وانتهى", "نوبه قصيره"]
+
+  - id: moderate_breathing
+    category: respiratory
+    esi: 3
+    weight: 5
+    description_ar: "ضيق تنفس متوسط"
+    phrases:
+      msa: ["ضيق تنفس متوسط", "صعوبه تنفس"]
+      najdi: ["نفسه ضيق شوي", "يتنفس بصعوبه"]
+      hijazi: ["نفسه ضيق شويه"]
+      khaleeji: ["نفسه ضيق"]
+      universal: ["ضيق نفس", "صعوبه تنفس متوسطه"]
+
+  - id: abdominal_pain
+    category: gi
+    esi: 3
+    weight: 4
+    description_ar: "الم بطن متوسط"
+    phrases:
+      msa: ["الم في البطن", "وجع بطن", "مغص"]
+      najdi: ["بطني يوجعني", "مغص", "الم بالبطن"]
+      hijazi: ["بطني بيوجعني", "وجع في بطني", "مغص"]
+      khaleeji: ["بطني يعورني", "مغص"]
+      universal: ["وجع بطن", "الم بطن", "مغص"]
+
+  - id: bowel_obstruction
+    category: gi
+    esi: 3
+    weight: 6
+    description_ar: "انسداد امعاء مشتبه"
+    phrases:
+      msa: ["انسداد امعاء", "ما يتبرز من ايام", "بطن منتفخه وقي"]
+      najdi: ["بطنه منتفخه وما يتبرز", "من ايام ما راح الحمام ويستفرغ"]
+      hijazi: ["بطنه منفوخه وبيستفرغ"]
+      khaleeji: ["بطنه منتفخه ما يتبرز"]
+      universal: ["بطن منتفخه", "انسداد", "ما يتبرز"]
+
+  - id: high_fever
+    category: infectious
+    esi: 3
+    weight: 4
+    description_ar: "حراره عاليه"
+    phrases:
+      msa: ["حمى شديده", "ارتفاع حراره", "حراره عاليه"]
+      najdi: ["حراره عاليه", "يحمى", "سخونه عاليه", "جسمه حار"]
+      hijazi: ["حراره عاليه", "حمى", "سخونيه عاليه", "جسمه ساخن"]
+      khaleeji: ["حراره عاليه", "حمى", "سخونه عاليه", "جسمه حار"]
+      universal: ["حراره", "حمى", "سخونه"]
+
+  - id: diabetic_emergency
+    category: endocrine
+    esi: 3
+    weight: 6
+    description_ar: "طارئه سكري"
+    phrases:
+      msa: ["ازمه سكري", "انخفاض السكر", "ارتفاع السكر الحاد"]
+      najdi: ["سكره نزل", "سكره طلع", "عنده سكري وتعبان", "غشى من السكر"]
+      hijazi: ["سكره نزل", "سكره عالي", "اغمى عليه من السكر"]
+      khaleeji: ["سكره نزل", "سكره طلع", "اغمى عليه من السكر"]
+      universal: ["سكري", "سكر نزل", "سكر طلع", "ازمه سكر"]
+
+  - id: hypoglycemia
+    category: endocrine
+    esi: 2
+    weight: 7
+    description_ar: "هبوط سكر الدم"
+    phrases:
+      msa: ["هبوط حاد في السكر", "نقص السكر الشديد"]
+      najdi: ["سكره نزل مره", "تعرق بارد وسكره نزل", "ما يركز وسكره واطي"]
+      hijazi: ["سكره نزل قوي", "بيعرق برد والسكر نزل"]
+      khaleeji: ["سكره نازل", "بارد ومتعرق والسكر واطي"]
+      universal: ["نقص سكر", "سكر منخفض"]
+
+  - id: hyperglycemia
+    category: endocrine
+    esi: 3
+    weight: 5
+    description_ar: "ارتفاع السكر"
+    phrases:
+      msa: ["ارتفاع السكر", "فرط سكر الدم"]
+      najdi: ["سكره طالع مره", "السكر فوق الاربعمئه", "عطش شديد وسكره عالي"]
+      hijazi: ["سكره عالي قوي", "تبوله كتير والسكر عالي"]
+      khaleeji: ["سكره طالع وايد"]
+      universal: ["سكر مرتفع", "ارتفاع سكر"]
+
+  - id: head_injury_conscious
+    category: trauma_head
+    esi: 3
+    weight: 6
+    description_ar: "اصابه راس مع وعي"
+    phrases:
+      msa: ["اصابه في الراس", "رضه راسيه", "ضربه في الراس"]
+      najdi: ["ضربه في راسه", "راسه اصطدم", "طاح على راسه"]
+      hijazi: ["ضربه في راسه", "راسه اتضرب", "وقع على راسه"]
+      khaleeji: ["ضربه في راسه", "طاح على راسه"]
+      universal: ["ضربه راس", "اصابه راس", "وقع على راسه"]
+
+  - id: fracture_isolated
+    category: trauma
+    esi: 3
+    weight: 5
+    description_ar: "كسر بسيط"
+    phrases:
+      msa: ["كسر", "كسر في العظم", "عظم مكسور"]
+      najdi: ["يده مكسوره", "عظمه مكسوره", "كسر", "رجله مكسوره"]
+      hijazi: ["ايده مكسوره", "رجله مكسوره", "كسر"]
+      khaleeji: ["يده مكسوره", "فيه كسر"]
+      universal: ["كسر", "عظم مكسور", "مكسور"]
+
+  - id: vaginal_bleeding
+    category: ob_gyn
+    esi: 3
+    weight: 5
+    description_ar: "نزيف مهبلي"
+    phrases:
+      msa: ["نزيف مهبلي", "نزيف نسائي"]
+      najdi: ["ينزل دم منها", "ينزل منها دم", "ينزف منها", "دوره قويه", "تنزف دم"]
+      hijazi: ["دم كتير منها", "بينزل منها دم", "بتنزف"]
+      khaleeji: ["ينزل دم", "نزيف قوي", "ينزل منها دم وايد"]
+      universal: ["نزيف مهبلي", "دم ينزل منها", "نازف من تحت"]
+
+  - id: alcohol_drug_intoxication
+    category: toxicology
+    esi: 3
+    weight: 5
+    description_ar: "تسمم من كحول او مخدرات"
+    phrases:
+      msa: ["تسمم كحولي", "تاثير مخدرات", "سكر شديد"]
+      najdi: ["سكران مره", "تعاطى مخدر", "متاثر من شي"]
+      hijazi: ["سكران كتير", "متاثر من مخدر"]
+      khaleeji: ["سكران وايد", "متاثر"]
+      universal: ["تسمم", "سكر شديد", "مخدر"]
+
+  - id: ground_level_fall_elderly
+    category: trauma_fall
+    esi: 3
+    weight: 5
+    description_ar: "سقوط مسن من مستوى الارض"
+    phrases:
+      msa: ["سقوط مسن", "طاح مسن من وقوف"]
+      najdi: ["الجد طاح", "العم طاح من وقوف", "المسن وقع"]
+      hijazi: ["الحاج وقع", "الحاجه طاحت"]
+      khaleeji: ["الجد طاح", "العمه طاحت"]
+      universal: ["طاح مسن", "وقع كبير بالسن"]
+
+  - id: assault
+    category: trauma_blunt
+    esi: 3
+    weight: 5
+    description_ar: "اعتداء - ضرب"
+    phrases:
+      msa: ["اعتداء", "ضرب مبرح"]
+      najdi: ["ضربوه", "انضرب", "تعرض لاعتداء"]
+      hijazi: ["اتضرب", "ضربوه"]
+      khaleeji: ["ضربوه", "تعرض لضرب"]
+      universal: ["اعتداء", "ضرب", "شجار"]
+
+  - id: heat_exhaustion
+    category: environmental
+    esi: 3
+    weight: 4
+    description_ar: "اجهاد حراري"
+    phrases:
+      msa: ["اجهاد حراري", "دوار من الحر"]
+      najdi: ["تعبان من الحر", "يعرق ويتعب"]
+      hijazi: ["تعبان من الحر"]
+      khaleeji: ["تعبان من الحر"]
+      universal: ["تعب من الحر", "اجهاد حراري"]
+
+  - id: severe_vomiting
+    category: gi
+    esi: 3
+    weight: 4
+    description_ar: "قي شديد متكرر"
+    phrases:
+      msa: ["قي شديد", "استفراغ متكرر"]
+      najdi: ["يستفرغ كثير", "ما يوقف الاستفراغ", "يتقيا كل شي"]
+      hijazi: ["بيستفرغ كتير"]
+      khaleeji: ["يستفرغ وايد"]
+      universal: ["استفراغ كثير", "قي متكرر"]
+
+  - id: copd_exacerbation
+    category: respiratory
+    esi: 3
+    weight: 6
+    description_ar: "تفاقم انسداد رئوي مزمن"
+    phrases:
+      msa: ["تفاقم انسداد رئوي مزمن"]
+      najdi: ["تعبان من الربو المزمن", "عنده رئه مزمنه واسوا"]
+      hijazi: ["عنده مشكله في الرئه وبتعبان"]
+      khaleeji: ["الربو جاله من الصدر"]
+      universal: ["انسداد رئوي", "تفاقم رئوي"]
+
+  - id: thermal_burn_minor
+    category: burns
+    esi: 3
+    weight: 4
+    description_ar: "حرق سطحي متوسط"
+    phrases:
+      msa: ["حرق سطحي", "حرق درجه اولى"]
+      najdi: ["حرق بالمويه الساخنه", "حرق بسيط من نار"]
+      hijazi: ["حرق بالميه السخنه"]
+      khaleeji: ["حرق بالماي الحار"]
+      universal: ["حرق بسيط", "حرق سطحي"]
+
+  - id: electrical_burn_minor
+    category: burns
+    esi: 3
+    weight: 5
+    description_ar: "حرق كهربائي سطحي"
+    phrases:
+      msa: ["حرق كهربائي"]
+      najdi: ["حرق من سلك كهرب", "كهربه خفيفه وحرقته"]
+      hijazi: ["حرق من الكهربا"]
+      khaleeji: ["حرق كهرب"]
+      universal: ["حرق كهرب", "حرق كهربائي"]
+
+  # ═════════════════════════════════════════════════════════════════════════
+  # ESI-4: LESS URGENT
+  # ═════════════════════════════════════════════════════════════════════════
+
+  - id: minor_cut
+    category: trauma
+    esi: 4
+    weight: 2
+    description_ar: "جرح بسيط"
+    phrases:
+      msa: ["جرح بسيط", "قطع بسيط"]
+      najdi: ["جرح صغير", "قطع بسيط", "جرح خفيف"]
+      hijazi: ["جرح صغير", "قطع بسيط"]
+      khaleeji: ["جرح صغير", "جرح خفيف"]
+      universal: ["جرح صغير", "قطع بسيط"]
+
+  - id: mild_vomiting
+    category: gi
+    esi: 4
+    weight: 3
+    description_ar: "غثيان بسيط"
+    phrases:
+      msa: ["غثيان", "قي خفيف"]
+      najdi: ["يحس بغثيان", "استفرغ مره"]
+      hijazi: ["عنده غثيان"]
+      khaleeji: ["عنده غثيان"]
+      universal: ["غثيان", "قي خفيف"]
+
+  - id: back_pain
+    category: msk
+    esi: 4
+    weight: 2
+    description_ar: "الم ظهر"
+    phrases:
+      msa: ["الم في الظهر", "وجع الظهر"]
+      najdi: ["ظهري يوجعني"]
+      hijazi: ["ظهري بيوجعني"]
+      khaleeji: ["ظهري يعورني"]
+      universal: ["وجع ظهر", "الم ظهر"]
+
+  - id: mild_fever
+    category: infectious
+    esi: 4
+    weight: 3
+    description_ar: "حراره خفيفه"
+    phrases:
+      msa: ["حراره خفيفه"]
+      najdi: ["حرارته شويه عاليه"]
+      hijazi: ["حرارته شويه"]
+      khaleeji: ["حرارته شويه"]
+      universal: ["حراره خفيفه"]
+
+  # ─── Canonical bare-symptom concepts (audit 2026-05) ───────────────────
+  # Single-token Arabic medical keywords. These guarantee that natural
+  # dispatcher phrases like "فيني صداع" / "عندي نزيف" highlight the
+  # symptom word even when the more specific concept (severe_headache,
+  # uncontrolled_bleeding, …) doesn't match. They are deliberately
+  # low-priority (ESI 4, low weight) so they never override a more
+  # specific concept's triage colour — the rule engine still picks the
+  # most critical ESI per case.
+  #
+  # Safe because the matcher is now token-aware: "صداع" matches the
+  # standalone token only, NOT inside "صداعا" or "وصداع" unless clitic
+  # stripping applies. Each entry is at least 4 characters so it isn't
+  # vulnerable to the historical substring-collision class of bug.
+
+  - id: headache_generic
+    category: neurological
+    esi: 4
+    weight: 2
+    description_ar: "صداع"
+    phrases:
+      universal: ["صداع"]
+
+  - id: bleeding_generic
+    category: trauma
+    esi: 3
+    weight: 4
+    description_ar: "نزيف"
+    phrases:
+      universal: ["نزيف"]
+
+  - id: breathing_generic
+    category: respiratory
+    esi: 4
+    weight: 3
+    description_ar: "تنفس"
+    phrases:
+      universal: ["تنفس"]
+
+  - id: chest_generic
+    category: cardiac
+    esi: 4
+    weight: 3
+    description_ar: "صدر"
+    phrases:
+      # "صدر" alone is 3 chars — covered safely by the token-aware
+      # matcher (no false matches inside "صدري", "صدرها" without the
+      # clitic strip producing a too-short stem).
+      universal: ["صدر"]
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Risk modifiers: applied against the FULL transcript. escalate=true bumps ESI
+# down by 1 (more critical); escalate=false just adds a note for dispatcher.
+# ═══════════════════════════════════════════════════════════════════════════
+risk_modifiers:
+  - id: age_elderly
+    note_ar: "مريض مسن - تصعيد"
+    escalate: true
+    triggers:
+      - "عجوز"
+      - "كبير بالسن"
+      - "فوق السبعين"
+      - "فوق الثمانين"
+      - "تسعين"
+      - "مسن"
+      - "عمره كبير"
+      - "الجد"
+      - "الحاج"
+
+  - id: age_pediatric
+    note_ar: "مريض طفل - تصعيد"
+    escalate: true
+    triggers:
+      - "طفل"
+      - "رضيع"
+      - "بيبي"
+      - "ولد صغير"
+      - "بنت صغيره"
+      - "حديث الولاده"
+      - "عمره سنه"
+      - "عمره سنتين"
+      - "مولود"
+
+  - id: pregnancy
+    note_ar: "مريضه حامل - تصعيد"
+    escalate: true
+    triggers:
+      - "حامل"
+      - "حمل"
+      - "حامله"
+      - "الحامل"
+
+  - id: cardiac_history
+    note_ar: "تاريخ مرضي قلبي - تصعيد"
+    escalate: true
+    triggers:
+      - "عنده قلب"
+      - "مريض قلب"
+      - "عمليه قلب"
+      - "عنده دعامه"
+      - "قسطره"
+      - "ذبحه سابقه"
+
+  - id: anticoagulant_use
+    note_ar: "مستخدم مميعات دم - تصعيد"
+    escalate: true
+    triggers:
+      - "مميع دم"
+      - "وارفرين"
+      - "اسبرين"
+      - "يتناول مميعات"
+
+  - id: renal_patient
+    note_ar: "مريض كلى - تصعيد"
+    escalate: true
+    triggers:
+      - "غسيل كلى"
+      - "مريض كلى"
+      - "عنده فشل كلوي"
+
+  - id: diabetic_history
+    note_ar: "مريض سكري معروف - مراقبه"
+    escalate: false
+    triggers:
+      - "مريض سكري"
+      - "عنده سكر"
+      - "سكري مزمن"
+
+  - id: immunocompromised
+    note_ar: "مناعه منخفضه - تصعيد"
+    escalate: true
+    triggers:
+      - "مناعه ضعيفه"
+      - "كيماوي"
+      - "علاج كيماوي"
+      - "سرطان"
+      - "زراعه اعضاء"
+
+  - id: alone_no_caregiver
+    note_ar: "المريض لوحده - لا يوجد مرافق"
+    escalate: false
+    triggers:
+      - "لحاله"
+      - "بدون احد"
+      - "ما في احد معه"
+      - "وحده"
+      - "لوحده"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Arabic negation particles. A symptom match is marked as NEGATED if one of
+# these tokens appears in a short word-window BEFORE the matched span.
+# Negated matches do not count toward triage but are still surfaced as
+# evidence (marked negated=true) for the dispatcher.
+# ═══════════════════════════════════════════════════════════════════════════
+negation:
+  particles:
+    - "ما"
+    - "مو"
+    - "مش"
+    - "لا"
+    - "ليس"
+    - "بدون"
+    - "غير"
+    - "ماعاد"
+    - "ماعنده"
+    - "ماعنده"
+  window_tokens: 3

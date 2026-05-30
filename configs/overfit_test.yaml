@@ -1,0 +1,139 @@
+# Overfit sanity-check config.
+# Proves the data pipeline works: tiny subset, no augmentation, fast warmup.
+# Expect val_wer to drop below 0.5 within ~20 epochs if everything is correct.
+
+name: "FastConformer-CTC-BPE-Overfit-Test"
+
+model:
+  sample_rate: 16000
+  log_prediction: true
+  ctc_reduction: "mean_volume"
+
+  train_ds:
+    manifest_filepath: "manifests_debug/train_overfit.json"
+    sample_rate: ${model.sample_rate}
+    batch_size: 8
+    num_workers: 2
+    pin_memory: true
+    trim_silence: false
+    max_duration: 20.0
+    min_duration: 0.3
+    shuffle: true
+    is_tarred: false
+
+  validation_ds:
+    manifest_filepath: "manifests_debug/val_overfit.json"
+    sample_rate: ${model.sample_rate}
+    batch_size: 8
+    num_workers: 2
+    pin_memory: true
+    max_duration: 20.0
+    min_duration: 0.3
+    shuffle: false
+
+  tokenizer:
+    dir: "tokenizer"
+    type: "bpe"
+
+  preprocessor:
+    _target_: nemo.collections.asr.modules.AudioToMelSpectrogramPreprocessor
+    sample_rate: ${model.sample_rate}
+    normalize: "per_feature"
+    window_size: 0.025
+    window_stride: 0.01
+    window: "hann"
+    features: 80
+    n_fft: 512
+    frame_splicing: 1
+    dither: 0.00001
+    pad_to: 0
+
+  # Disabled for overfit — model must memorize, not generalise
+  spec_augment:
+    _target_: nemo.collections.asr.modules.SpectrogramAugmentation
+    freq_masks: 0
+    freq_width: 0
+    time_masks: 0
+    time_width: 0.0
+
+  encoder:
+    _target_: nemo.collections.asr.modules.ConformerEncoder
+    feat_in: ${model.preprocessor.features}
+    feat_out: -1
+    n_layers: 17
+    d_model: 256
+    subsampling: "dw_striding"
+    subsampling_factor: 8
+    subsampling_conv_channels: 256
+    causal_downsampling: false
+
+    ff_expansion_factor: 4
+    self_attention_model: "rel_pos"
+    n_heads: 4
+    att_context_size: [-1, -1]
+    att_context_style: "regular"
+    xscaling: true
+    untie_biases: true
+    pos_emb_max_len: 5000
+
+    conv_kernel_size: 9
+    conv_norm_type: "batch_norm"
+
+    dropout: 0.0
+    dropout_pre_encoder: 0.0
+    dropout_emb: 0.0
+    dropout_att: 0.0
+
+  decoder:
+    _target_: nemo.collections.asr.modules.ConvASRDecoder
+    feat_in: null
+    num_classes: -1
+    vocabulary: []
+
+  optim:
+    name: adamw
+    lr: 3.0e-3
+    betas: [0.9, 0.98]
+    weight_decay: 0.0
+
+    sched:
+      name: CosineAnnealing
+      warmup_steps: 10
+      warmup_ratio: null
+      min_lr: 1.0e-5
+
+trainer:
+  devices: 1
+  accelerator: "gpu"
+  max_epochs: 200
+  accumulate_grad_batches: 1
+  gradient_clip_val: 1.0
+  precision: "bf16-mixed"
+  enable_checkpointing: true
+  logger: true
+  log_every_n_steps: 1
+  val_check_interval: 1.0
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: 0
+  deterministic: false
+
+exp_manager:
+  exp_dir: "experiments"
+  name: ${name}
+  create_tensorboard_logger: true
+  create_wandb_logger: false
+  explicit_log_dir: null
+
+  checkpoint_callback_params:
+    monitor: "val_wer"
+    mode: "min"
+    save_top_k: 1
+    every_n_epochs: 5
+    always_save_nemo: false
+    save_last: true
+
+  resume_if_exists: false
+  resume_ignore_no_checkpoint: true
+
+early_stopping:
+  enabled: false

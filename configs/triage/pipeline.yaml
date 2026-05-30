@@ -1,0 +1,203 @@
+# EMS Triage Engine pipeline tunables.
+# Everything here is hot-swappable via env overrides or by editing this file.
+
+version: 1
+
+matcher:
+  # rapidfuzz token_set_ratio threshold. Lower = more permissive (catches worse
+  # ASR but more false positives). 80 is a good balance for post-normalization
+  # Arabic ASR output. Bump to 88 if you see too many wrong matches.
+  fuzzy_threshold: 86
+
+  # Per-chunk rapidfuzz candidate limit (top N scoring keywords returned).
+  top_k_per_chunk: 20
+
+  # Minimum length (in normalized characters) before we bother matching.
+  min_chunk_chars: 2
+
+  # How many keywords to scan per match. The full bank is usually OK but cap
+  # for safety against pathological inputs.
+  max_candidates: 2000
+
+negation:
+  # Maximum number of whitespace-separated tokens BEFORE a matched span that
+  # we scan for a negation particle. 3 catches "ما يتنفس" and "مش قادر يتنفس"
+  # but not unrelated earlier sentences.
+  window_tokens: 3
+
+case_evidence:
+  # How long (seconds) since the last bubble can a match stay "active"
+  # before we decay its confidence. Old evidence is not deleted, just
+  # down-weighted so newer contradicting evidence wins.
+  evidence_ttl_seconds: 90
+
+  # Minimum cumulative confidence before a symptom is included in the fast-
+  # path triage decision. 0.5 = at least one solid (exact or near-exact) match
+  # or multiple weak fuzzy matches.
+  min_active_confidence: 0.5
+
+rules:
+  # ESI → red/yellow/green mapping used by the existing UI + DB enum.
+  esi_to_level:
+    1: red
+    2: red
+    3: yellow
+    4: green
+    5: green
+
+  # When no symptoms match at all, return this as the default.
+  default_esi: 5
+
+llm_enricher:
+  # Debounce: wait this long after the last bubble before calling the LLM.
+  # Matches the reference "silence gap" concept. The LLM never blocks the
+  # fast path - it only runs when the caller pauses.
+  #
+  # NOTE: the triage badge (level/confidence/reasoning) is now LLM-owned,
+  # so this debounce is the dominant latency before the badge appears.
+  # Kept moderate so we fire soon after a pause without spamming the LLM
+  # mid-sentence on every short hesitation.
+  silence_gap_seconds: 1.5
+
+  # If the fast path already flagged keywords (highest-risk), shorten the
+  # debounce so the LLM enriches the most urgent cases fastest.
+  silence_gap_seconds_red: 0.8
+
+  # Hard timeout for a single LLM enrichment call. If exceeded we keep the
+  # fast-path result and emit a "timed_out" flag.
+  llm_timeout_seconds: 30.0
+
+  # Maximum concurrent LLM jobs per backend process. Prevents a spike of
+  # simultaneous calls from starving the event loop.
+  max_concurrent_jobs: 4
+
+websocket:
+  # How often (seconds) to ping idle triage WS clients so load-balancers
+  # don't close them.
+  heartbeat_seconds: 20
+
+  # Maximum queued messages per client before we start dropping the oldest.
+  client_queue_size: 64
+
+dialects:
+  # Only used for tagging / telemetry. Match weights are equal across dialects.
+  supported: [msa, najdi, hijazi, khaleeji]
+
+location_extraction:
+  # Words that, when followed by a noun phrase, indicate the start of a
+  # location reference. Hijazi/Najdi/Khaleeji variants are all included
+  # so the regex doesn't miss "قدام السوبر" or "جنب البقاله".
+  prefix_words:
+    # Spatial relations
+    - عند
+    - جنب
+    - بجنب
+    - جمب
+    - بجمب
+    - قدام
+    - مقابل
+    - مقابله
+    - وراء
+    - ورا
+    - وراه
+    - خلف
+    - تحت
+    - فوق
+    - داخل
+    - برا
+    - بره
+    - خارج
+    # Proximity
+    - قريب من
+    - بالقرب من
+    - حذا
+    - يم
+    - بنفس
+    # Deixis (caller pointing)
+    - هنا
+    - هناك
+    - هنيه
+
+  # Words that prefix a "type of place" so we can capture e.g.
+  # "شارع التحلية" or "مجمع الفيصلية". Add new POI types here, not in
+  # code, so dispatch can extend coverage without a deploy.
+  poi_words:
+    - شارع
+    - طريق
+    - حي
+    - مخرج
+    - جسر
+    - كبري
+    - دوار
+    - اشاره
+    - اشارة
+    - تقاطع
+    - محطه
+    - محطة
+    - مسجد
+    - جامع
+    - مدرسه
+    - مدرسة
+    - مستشفى
+    - مستوصف
+    - ميدان
+    - ساحة
+    - ساحه
+    - مجمع
+    - بناية
+    - بنايه
+    - عمارة
+    - عماره
+    - فيلا
+    - فلة
+    - مول
+    - سوبر
+    - بقالة
+    - بقاله
+    - نهاية
+    - بداية
+    - وسط
+
+  # Tokens we strip from the trailing end of a captured location, since
+  # they signal the next clause has started.
+  trailing_stop_words:
+    - صار
+    - صاير
+    - صاروا
+    - عليه
+    - عليها
+    - عليهم
+    - حادث
+    - الحادث
+    - نزيف
+    - ينزف
+    - يتنفس
+    - يتكلم
+    - وفيه
+    - فيه
+    - وفي
+    - هو
+    - هي
+    - واحد
+    - وحده
+    - شخص
+    - رجال
+    - حرمه
+    - مرة
+
+negation:
+  # ``window_tokens`` is defined above; this extends the particle list
+  # used by triage_engine/negation.py. The defaults already cover MSA
+  # particles; this section adds Khaleeji / Najdi / Hijazi colloquial
+  # variants so "مب" / "ما في" / "مو" / "بدون" all suppress
+  # false-positive symptom matches in conversational speech.
+  particles_extra:
+    - مب
+    - مو
+    - ماني
+    - مالي
+    - ما في
+    - مافيه
+    - مافي
+    - بدون
+    - من غير
