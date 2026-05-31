@@ -334,7 +334,55 @@ Check ffmpeg:
 ffmpeg -version
 ```
 
-### 8. Check the ASR model file
+### 8. Install the local LLM model with Ollama
+
+The app uses Ollama for optional LLM highlights and structured extraction.
+If you skip this step, the main app still works, but the LLM enrichment will be empty.
+
+Install Ollama:
+
+```powershell
+winget install Ollama.Ollama
+```
+
+Close PowerShell.
+
+Open PowerShell again.
+
+Check Ollama:
+
+```powershell
+ollama --version
+```
+
+Download the recommended Qwen model:
+
+```powershell
+ollama pull qwen2.5:7b
+```
+
+Optional, if your PC has enough RAM/VRAM, download the larger model too:
+
+```powershell
+ollama pull qwen3:14b
+```
+
+Check that the model is installed:
+
+```powershell
+ollama list
+```
+
+You should see at least one of these:
+
+```text
+qwen2.5:7b
+qwen3:14b
+```
+
+If the backend logs show `HTTP Error 404: Not Found` for a Qwen model, that model is not installed in Ollama. Run `ollama pull` for that model.
+
+### 9. Check the ASR model file
 
 Run this from the project root:
 
@@ -352,7 +400,7 @@ models\FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo
 
 If it is only around 134 bytes, that is the placeholder file. Delete it and replace it with the real `.nemo` file downloaded from Hugging Face.
 
-### 9. Create the Python environment
+### 10. Create the Python environment
 
 Run these lines one by one:
 
@@ -383,7 +431,7 @@ If you use CMD instead of PowerShell, activate with:
 .venv\Scripts\activate.bat
 ```
 
-### 10. Create the environment file
+### 11. Create the environment file
 
 In PowerShell, run:
 
@@ -399,7 +447,7 @@ copy .env.example .env
 
 The default `.env` values are enough for local development.
 
-### 11. Install frontend packages
+### 12. Install frontend packages
 
 Run this from the project root:
 
@@ -407,7 +455,7 @@ Run this from the project root:
 npm install
 ```
 
-### 12. Start the backend
+### 13. Start the backend
 
 Open a terminal in the project root.
 
@@ -427,7 +475,7 @@ Keep this terminal open.
 
 Wait until the backend finishes loading the NeMo ASR model.
 
-### 13. Start the frontend
+### 14. Start the frontend
 
 Open a second terminal.
 
@@ -445,7 +493,7 @@ npm run dev
 
 Keep this terminal open too.
 
-### 14. Open the app
+### 15. Open the app
 
 Open this URL in your browser:
 
@@ -468,7 +516,7 @@ To test the main flow:
 5. Speak Arabic.
 6. Review the transcript, extracted details, and suggested triage.
 
-### 15. Run it again later
+### 16. Run it again later
 
 Next time, you do not need to install everything again.
 
@@ -502,6 +550,8 @@ http://localhost:5173
 | `Activate.ps1` is blocked | Run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, then activate again |
 | Model file is missing or only 134 bytes | Download the real `.nemo` model from Hugging Face and put it in `models/` |
 | `ASR model preload failed` | Check that `.env` has `NEMO_MODEL_PATH=models/FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo` |
+| LLM says `HTTP Error 404: Not Found` | Run `ollama pull qwen2.5:7b` or `ollama pull qwen3:14b` |
+| LLM says `timed out` | Use the smaller model: `ollama pull qwen2.5:7b` |
 | No transcript appears | Make sure the backend is running and the model loaded successfully |
 | Audio or WebM error | Install ffmpeg, reopen the terminal, then run `ffmpeg -version` |
 | Frontend opens but API calls fail | Make sure the backend is running on port `8011` |
