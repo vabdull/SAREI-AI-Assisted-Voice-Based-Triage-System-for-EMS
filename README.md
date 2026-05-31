@@ -141,7 +141,7 @@ Final RNNT headline accuracy:
 
 ## Setup Guide
 
-Follow these steps in order on a Windows PC. Do not skip the install checks.
+This guide is for a beginner using Windows PowerShell. Follow the steps in order.
 
 The **project root** is the folder that contains these files and folders:
 
@@ -153,83 +153,15 @@ frontend/
 models/
 ```
 
-### 1. Install Python 3.11
+### 1. Download the project ZIP from GitHub Releases
 
-Open PowerShell.
-
-Install Python 3.11:
-
-```powershell
-winget install Python.Python.3.11
-```
-
-Close PowerShell.
-
-Open PowerShell again.
-
-Check that Python 3.11 installed correctly:
-
-```powershell
-py -3.11 --version
-```
-
-You should see something like:
+Open the SAREI GitHub Releases page:
 
 ```text
-Python 3.11.x
+https://github.com/vabdull/SAREI-AI-Assisted-Voice-Based-Triage-System-for-EMS/releases
 ```
 
-If this command fails, Python 3.11 is not installed correctly.
-
-Backup option: download Python 3.11 from `https://www.python.org/downloads/release/python-3119/`.
-During manual installation, check `Add python.exe to PATH`.
-
-### 2. Install Node.js
-
-In PowerShell, install Node.js LTS:
-
-```powershell
-winget install OpenJS.NodeJS.LTS
-```
-
-Close PowerShell.
-
-Open PowerShell again.
-
-Check Node and npm:
-
-```powershell
-node -v
-npm -v
-```
-
-Node should be version 18 or newer.
-
-Backup option: download Node.js LTS from `https://nodejs.org/`.
-
-### 3. Install ffmpeg
-
-In PowerShell, run:
-
-```powershell
-winget install Gyan.FFmpeg
-```
-
-After installing, close PowerShell and open it again.
-
-Check ffmpeg:
-
-```powershell
-ffmpeg -version
-```
-
-### 4. Download and extract the project
-
-Download the SAREI ZIP file from Google Drive:
-
-```text
-https://drive.google.com/file/d/1lhTRaONNKb4tfhXp7x7WRIaUANSHAKg9/view?usp=sharing
-```
+Download the latest project ZIP file from the release assets.
 
 Right-click the ZIP file.
 
@@ -241,25 +173,61 @@ Move the extracted folder somewhere easy to find, for example:
 C:\Users\your-name\Desktop\SAREI
 ```
 
-Open PowerShell and go to the extracted folder:
+### 2. Download the ASR model from Hugging Face
+
+Open the SAREI ASR model page:
+
+```text
+https://huggingface.co/abdullahtb/FastConformer-Arabic-SADA-Finetune-SAREI
+```
+
+Download this model file:
+
+```text
+FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo
+```
+
+Put the downloaded `.nemo` file inside the project `models` folder:
+
+```text
+SAREI\models\FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo
+```
+
+If there is already a tiny placeholder file with the same name, delete it or replace it.
+
+The final file must have exactly this path:
+
+```text
+SAREI\models\FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo
+```
+
+The model file should be large, around 438 MB.
+
+If the file is only around 134 bytes, it is not the real model file.
+
+### 3. Open PowerShell
+
+Open Windows PowerShell.
+
+Go to the project folder:
 
 ```powershell
 cd C:\path\to\SAREI
 ```
 
-For example:
+Example:
 
 ```powershell
 cd C:\Users\your-name\Desktop\SAREI
 ```
 
-If the folder name has spaces, put quotes around it:
+If the folder path has spaces, use quotes:
 
 ```powershell
-cd "C:\Users\your-name\Desktop\SAREI AI Project"
+cd "C:\Users\your-name\Desktop\SAREI Project"
 ```
 
-### 5. Check that you are in the correct folder
+### 4. Check that you opened the correct folder
 
 Run:
 
@@ -279,7 +247,94 @@ models
 
 If you do not see these, you are in the wrong folder.
 
-### 6. Check the ASR model
+### 5. Install Python 3.11
+
+Run this in PowerShell:
+
+```powershell
+winget install Python.Python.3.11
+```
+
+Close PowerShell.
+
+Open PowerShell again.
+
+Go back to the project folder:
+
+```powershell
+cd C:\path\to\SAREI
+```
+
+Check Python:
+
+```powershell
+py -3.11 --version
+```
+
+You should see something like:
+
+```text
+Python 3.11.x
+```
+
+If this command fails, install Python manually from:
+
+```text
+https://www.python.org/downloads/release/python-3119/
+```
+
+During manual installation, check **Add python.exe to PATH**.
+
+### 6. Install Node.js
+
+Run this in PowerShell:
+
+```powershell
+winget install OpenJS.NodeJS.LTS
+```
+
+Close PowerShell.
+
+Open PowerShell again.
+
+Go back to the project folder:
+
+```powershell
+cd C:\path\to\SAREI
+```
+
+Check Node and npm:
+
+```powershell
+node -v
+npm -v
+```
+
+Node should be version 18 or newer.
+
+If this command fails, install Node.js manually from:
+
+```text
+https://nodejs.org/
+```
+
+### 7. Install ffmpeg
+
+Run this in PowerShell:
+
+```powershell
+winget install Gyan.FFmpeg
+```
+
+After installing, close PowerShell and open it again.
+
+Check ffmpeg:
+
+```powershell
+ffmpeg -version
+```
+
+### 8. Check the ASR model file
 
 Run this from the project root:
 
@@ -287,19 +342,17 @@ Run this from the project root:
 dir models\FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo
 ```
 
-The model file must be inside `models/` and must be large, around 438 MB.
+The file should be around 438 MB.
 
-If the size is tiny, for example `134` bytes, that is not the real model file.
-Download the complete project ZIP again or download the real `.nemo` model file
-and place it here:
+If it is missing, download it from Hugging Face and put it here:
 
 ```text
 models\FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo
 ```
 
-The app needs this file for live Arabic transcription.
+If it is only around 134 bytes, that is the placeholder file. Delete it and replace it with the real `.nemo` file downloaded from Hugging Face.
 
-### 7. Create the Python environment
+### 9. Create the Python environment
 
 Run these lines one by one:
 
@@ -330,7 +383,7 @@ If you use CMD instead of PowerShell, activate with:
 .venv\Scripts\activate.bat
 ```
 
-### 8. Create the environment file
+### 10. Create the environment file
 
 In PowerShell, run:
 
@@ -346,7 +399,7 @@ copy .env.example .env
 
 The default `.env` values are enough for local development.
 
-### 9. Install frontend packages
+### 11. Install frontend packages
 
 Run this from the project root:
 
@@ -354,7 +407,7 @@ Run this from the project root:
 npm install
 ```
 
-### 10. Start the backend
+### 12. Start the backend
 
 Open a terminal in the project root.
 
@@ -374,7 +427,7 @@ Keep this terminal open.
 
 Wait until the backend finishes loading the NeMo ASR model.
 
-### 11. Start the frontend
+### 13. Start the frontend
 
 Open a second terminal.
 
@@ -392,7 +445,7 @@ npm run dev
 
 Keep this terminal open too.
 
-### 12. Open the app
+### 14. Open the app
 
 Open this URL in your browser:
 
@@ -415,7 +468,7 @@ To test the main flow:
 5. Speak Arabic.
 6. Review the transcript, extracted details, and suggested triage.
 
-### 13. Run it again later
+### 15. Run it again later
 
 Next time, you do not need to install everything again.
 
@@ -447,7 +500,7 @@ http://localhost:5173
 | `No runtime installed that matches 3.11` | Install Python 3.11, then close and reopen PowerShell |
 | `.venv\Scripts\Activate.ps1` does not exist | The venv was not created. Run `py -3.11 -m venv .venv` first |
 | `Activate.ps1` is blocked | Run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, then activate again |
-| Model file is missing or only 134 bytes | Download the real `.nemo` model file and put it in `models/` |
+| Model file is missing or only 134 bytes | Download the real `.nemo` model from Hugging Face and put it in `models/` |
 | `ASR model preload failed` | Check that `.env` has `NEMO_MODEL_PATH=models/FastConformer-Arabic-SADA-Finetune-baseline-v1_final.nemo` |
 | No transcript appears | Make sure the backend is running and the model loaded successfully |
 | Audio or WebM error | Install ffmpeg, reopen the terminal, then run `ffmpeg -version` |
