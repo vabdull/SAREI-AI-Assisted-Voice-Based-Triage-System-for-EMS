@@ -8,7 +8,7 @@
 
 **Made By:** Abdullah Alotaibi, Abdulmalik Alotaibi, Mohammed Aljabri  
 **Course:** Graduation Project 498  
-**Supervisor:** Dr. Ismail Keshta  
+**Supervisors:** Dr. Ismail Keshta, Dr. Mohammed Al Gabri  
 **Date:** May 2026  
 **Project:** SAREI | سارع AI-Assisted Voice-Based Triage System for Emergency Medical Services
 
