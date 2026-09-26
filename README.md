@@ -6,7 +6,7 @@
 
 ## Intelligent Unified Medical Emergency Platform
 
-**Made By:** Abdullah Alotaibi, Abdulmalik Alotaibi, Mohammed Aljabri  
+**Made By:** Abdullah Alotaibi
 **Course:** Graduation Project 498  
 **Supervisors:** Dr. Ismail Keshta, Dr. Mohammed Al Gabri  
 **Date:** May 2026  
